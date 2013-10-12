@@ -16,3 +16,7 @@ body{
 .summary{
     margin-top:20px;
 }
+
+#locationName{
+    text-transform:capitalize;
+}
