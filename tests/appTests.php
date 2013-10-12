@@ -19,6 +19,10 @@ class WeatherTest extends PHPUnit_Framework_TestCase {
       $location = new Location();
       $location->setLatLng("52.430286407471","-1.7572659254074");
       
+      $array = array('lat' => "52.430286407471", 'lng' => "-1.7572659254074");
+      
+      $this->assertEquals($array,$location->getLatLng());
+      
       echo $location->getLatLng();
     }
     
