@@ -27,7 +27,7 @@ class LocationController{
     function getLocation($string){
         try {
             $this->geocode = $this->geocoder->geocode($string);
-            var_export($this->geocode);
+            //var_export($this->geocode);
             $this->location->setLatLng($this->geocode['latitude'],$this->geocode['longitude']);
             return $this->location->getLatLng();
         } catch (Exception $e) {
