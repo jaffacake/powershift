@@ -14,6 +14,7 @@
 <script>
     $(document).ready(function(){
       $("#search").submit(function(event){
+          $("#LoadingImage").show();
           event.preventDefault();
           $.ajax({
             type: "POST",
@@ -21,9 +22,8 @@
             data: { location: $("#location").val()}
           })
             .done(function( data ) {
-                if ( console && console.log ) {
-                console.log( "Sample of data:", data );
-                }
+            $("#LoadingImage").hide();
+                $("#content").html(data);
             });
           
       });
@@ -35,34 +35,39 @@
 <form id="search" method="POST">
 <input id="location" name="location"/>
 <input id="submit" type="submit"/>
+<div id="LoadingImage" style="display: none">
+<img src="images/ajax_loading.gif" />
+</div>
 </form>
 
-<table min-height="200px">
-    <tr>
-        <td><h1><?=$array['name']?></h1></td>
-    </tr>
-    <tr valign="top" align="center">
-        <?php
-        $i = 1;
-        
-        foreach($array2 as $data){
-            
-        ?>
-        <td>
-            
-            <div class="forecast">
-                <div class="day"><h2><?=Date('l', strtotime("+".$i." days"))?></h2></div>
-                <div class="icon"><img src="images/weather/<?=$data->getIcon()?>.png" width="96px" height="96px"/></div>
-                <div class="maxTemp">Max Temp: <?=$data->getMaxTemperature()?></div>
-                <div class="minTemp">Min Temp: <?=$data->getMinTemperature()?></div>
-                <div class="summary"><?=$data->getSummary()?></div>
-            </div>
-            
-        </td>
-        <?
-            $i++;
-        
-        }
-        ?>
-    </tr>
-</table>
+<div id="content">
+    <table min-height="200px">
+        <tr>
+            <td><h1 id="locationName"><?=$array['name']?></h1></td>
+        </tr>
+        <tr valign="top" align="center">
+            <?php
+            $i = 1;
+            foreach($array2 as $data){
+
+            ?>
+            <td>
+
+                <div class="forecast">
+                    <div class="day" id="day<?=$i?>"><h2><?=Date('l', strtotime("+".$i." days"))?></h2></div>
+                    <div class="icon" id="icon<?=$i?>"><img src="images/weather/<?=$data->getIcon()?>.png" width="96px" height="96px"/></div>
+                    <div class="maxTemp" id="maxTemp<?=$i?>">Max Temp: <?=$data->getMaxTemperature()?></div>
+                    <div class="minTemp" id="minTemp<?=$i?>">Min Temp: <?=$data->getMinTemperature()?></div>
+                    <div class="summary" id="summary<?=$i?>"><?=$data->getSummary()?></div>
+                </div>
+
+            </td>
+            <?php
+                $i++;
+
+            }
+            ?>
+        </tr>
+    </table>
+</div>
+
