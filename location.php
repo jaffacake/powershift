@@ -2,8 +2,9 @@
 
 class Location{
     
-    var $lat;
-    var $lng;
+    private $lat;
+    private $lng;
+    private $name;
     
     function setLatLng($lat,$lng){
         $this->lat = $lat;
@@ -11,7 +12,15 @@ class Location{
     }
     
     function getLatLng(){
-        return array('lat' => $this->lat, 'lng' => $this->lng);
+        return array('lat' => $this->lat, 'lng' => $this->lng, 'name' =>$this->name);
+    }
+    
+    function setName($name){
+        $this->name = $name;
+    }
+    
+    function getName(){
+        return $this->name;
     }
 }
 ?>
