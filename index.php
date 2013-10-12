@@ -7,7 +7,7 @@ require_once('weatherController.php');
     
     $array = $locationController->getLocation("b92 0pu");
     
-    echo $weatherController->getTodaysForecast($array['lat'], $array['lng']);
+    print_r($weatherController->getWeeksForecast($array['lat'], $array['lng']));
     
     print_r($array);
       
