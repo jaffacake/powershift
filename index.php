@@ -1,5 +1,12 @@
 <?php
+    require_once('locationController.php');
+    require_once('weatherController.php');
+
+    $locationController = new LocationController();
+    $weatherController = new weatherController();
     
+    $array = $locationController->getLocation($_SERVER['REMOTE_ADDR']);
+    $array2 = $weatherController->getWeeksForecast($array['lat'], $array['lng']);
 ?>
 <link href="style.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery-1.10.2.min.js"></script>
@@ -35,6 +42,7 @@
     <tr valign="top" align="center">
         <?php
         $i = 1;
+        
         foreach($array2 as $data){
             
         ?>
