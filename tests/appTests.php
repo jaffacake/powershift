@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '\..\location.php';
 require_once dirname(__FILE__) . '\..\weather.php';
-//require_once dirname(__FILE__) . '/../locationController.php';
+require_once dirname(__FILE__) . '\..\locationController.php';
  
 class WeatherTest extends PHPUnit_Framework_TestCase {
    
@@ -9,7 +9,7 @@ class WeatherTest extends PHPUnit_Framework_TestCase {
      parent::setUp ();
    
     }
-       
+         
     function testCanCreateALocation() {
       $location = new Location();
       echo "Location created";
@@ -29,6 +29,20 @@ class WeatherTest extends PHPUnit_Framework_TestCase {
     function testCanCreateAWeather() {
       $weather = new Weather();
       echo "weather created";
+    }
+    
+    function testCanCreateALocationController() {
+      $locationController = new LocationController();
+      echo "LocationController created";
+    }
+    
+    function testCanRetrieveLocationLatLng(){
+      $locationController = new LocationController();
+      $locationController->getLocation("b92 0pu");
+      
+      $location = new Location();
+      $location->setLatLng('52.430286407471','-1.7572659254074');
+      echo "LocationController created";
     }
    
     protected function tearDown() {
