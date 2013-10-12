@@ -7,7 +7,7 @@ class WeatherController{
     
     private $weather;
     private $api_key = '590e67842b699d251fad2f60b4f9cdc5';
-    private $forecast;
+    private $forecastWeek;
     private $forecastToday;
     
     
@@ -19,6 +19,17 @@ class WeatherController{
     public function getTodaysForecast($lat,$lng){
         $this->forecastToday = $this->forecast->getForecastToday($lat, $lng);
         return $this->forecastToday;
+    }
+    
+    public function getWeeksForecast($lat,$lng){
+        $array = $this->forecast->getForecastWeek($lat, $lng);
+        
+        foreach($array as $data){
+            $this->forecastWeek[] = $data->getMaxTemperature();
+            
+        }
+        
+        return $this->forecastWeek;
     }
 }
 
