@@ -29,6 +29,7 @@ class LocationController{
             $this->geocode = $this->geocoder->geocode($string);
             //var_export($this->geocode);
             $this->location->setLatLng($this->geocode['latitude'],$this->geocode['longitude']);
+            $this->location->setName($this->geocode['city']);
             return $this->location->getLatLng();
         } catch (Exception $e) {
             echo $e->getMessage();
