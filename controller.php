@@ -8,7 +8,37 @@ require_once('weatherController.php');
 
     if(isset($_POST['location'])){
         $array = $locationController->getLocation($_POST['location']);
-        echo $weatherController->getWeeksForecast($array['lat'], $array['lng']);
+        $array2 = $weatherController->getWeeksForecast($array['lat'], $array['lng']);
+        ?>
+            <table min-height="200px">
+        <tr>
+            <td><h1 id="locationName"><?=$array['name']?></h1></td>
+        </tr>
+        <tr valign="top" align="center">
+            <?php
+            $i = 1;
+            foreach($array2 as $data){
+
+            ?>
+            <td>
+
+                <div class="forecast">
+                    <div class="day" id="day<?=$i?>"><h2><?=Date('l', strtotime("+".$i." days"))?></h2></div>
+                    <div class="icon" id="icon<?=$i?>"><img src="images/weather/<?=$data->getIcon()?>.png" width="96px" height="96px"/></div>
+                    <div class="maxTemp" id="maxTemp<?=$i?>">Max Temp: <?=$data->getMaxTemperature()?></div>
+                    <div class="minTemp" id="minTemp<?=$i?>">Min Temp: <?=$data->getMinTemperature()?></div>
+                    <div class="summary" id="summary<?=$i?>"><?=$data->getSummary()?></div>
+                </div>
+
+            </td>
+            <?php
+                $i++;
+
+            }
+            ?>
+        </tr>
+    </table>
+<?php
     }else{
         echo "null";
     }
