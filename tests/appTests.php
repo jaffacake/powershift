@@ -38,10 +38,13 @@ class WeatherTest extends PHPUnit_Framework_TestCase {
     
     function testCanRetrieveLocationLatLng(){
       $locationController = new LocationController();
-      $locationController->getLocation("b92 0pu");
+      $location = $locationController->getLocation("b92 0pu");
       
-      $location = new Location();
-      $location->setLatLng('52.430286407471','-1.7572659254074');
+      $location2 = new Location();
+      $location2->setLatLng('52.430286407471','-1.7572659254074');
+      
+      $this->assertEquals($location->getLatLng(),$location2->getLatLng());
+      
       echo "LocationController created";
     }
    
