@@ -3,5 +3,16 @@ body{
 }
 
 .forecast{
+    color:#ffffff;
     background-color: #226083;
+    min-height:250px;
+    width: 125px;
+}
+
+.forecast-sel{
+    background-color: #0f4868;
+}
+
+.summary{
+    margin-top:20px;
 }
