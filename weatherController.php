@@ -21,15 +21,8 @@ class WeatherController{
         return $this->forecastToday;
     }
     
-    public function getWeeksForecast($lat,$lng){
-        $array = $this->forecast->getForecastWeek($lat, $lng);
-        
-        foreach($array as $data){
-            $this->forecastWeek[] = $data->getMaxTemperature();
-            
-        }
-        
-        return $this->forecastWeek;
+    public function getWeeksForecast($lat,$lng){       
+        return $this->forecast->getForecastWeek($lat, $lng);;
     }
 }
 
