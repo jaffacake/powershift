@@ -1,15 +1,16 @@
 <?php
 require_once('locationController.php');
+require_once('weatherController.php');
 
     $locationController = new LocationController();
+    $weatherController = new weatherController();
+    
+    $array = $locationController->getLocation("b92 0pu");
+    
+    echo $weatherController->getTodaysForecast($array['lat'], $array['lng']);
+    
+    print_r($array);
       
-      $array = array('lat' => '52.430286407471', 'lng' => '-1.7572659254074');
-      
-      print_r($array);
-      
-      $array2 = $locationController->getLocation("b92 0pu");
-      
-      print_r($array2);
-      
-      echo "LocationController created";
+    echo "LocationController created";
+    
 ?>
