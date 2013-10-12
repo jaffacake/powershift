@@ -38,7 +38,9 @@
 </form>
 
 <table min-height="200px">
-
+    <tr>
+        <td><h1><?=$array['name']?></h1></td>
+    </tr>
     <tr valign="top" align="center">
         <?php
         $i = 1;
