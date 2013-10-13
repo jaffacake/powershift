@@ -103,11 +103,12 @@
 <form id="search" method="POST">
     <div class="ui-widget">
     <input id="location" name="location"/>
-    </div>
+    
     <input id="submit" type="submit"/>
     <input type="button" id="currentLocation" name="currentLocation" value="Use Current Location"/>
     <div id="LoadingImage" style="display: none">
         <img src="images/ajax_loading.gif" />
+    </div>
     </div>
 </form>
 
