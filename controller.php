@@ -29,8 +29,8 @@ require_once('weatherController.php');
                 <div class="forecast" id="forecast<?=$i?>">
                     <div class="day" id="day<?=$i?>"><h2><?=Date('l', strtotime("+".$i." days"))?></h2></div>
                     <div class="icon" id="icon<?=$i?>"><img src="images/weather/<?=$data->getIcon()?>.png" width="96px" height="96px"/></div>
-                    <div class="maxTemp" id="maxTemp<?=$i?>">Max Temp: <?=$data->getMaxTemperature()?></div>
-                    <div class="minTemp" id="minTemp<?=$i?>">Min Temp: <?=$data->getMinTemperature()?></div>
+                    <div class="maxTemp" id="maxTemp<?=$i?>">Max Temp: <?=$data->getMaxTemperature()?>&deg;</div>
+                    <div class="minTemp" id="minTemp<?=$i?>">Min Temp: <?=$data->getMinTemperature()?>&deg;</div>
                     <div class="summary" id="summary<?=$i?>"><?=$data->getSummary()?></div>
                 </div>
 
@@ -53,28 +53,27 @@ require_once('weatherController.php');
                     $timestamp = Date('U');
                 }
                 $array2 = $weatherController->getDayForecast($array['lat'], $array['lng'], $timestamp);
-            }
+            
             ?>
-
-            <div>
-                <table valgin="top">
-                    <tr>
+                <table valgin="top" style="color:#ffffff;">
+                    <tr valgin="top">
             <?php
             foreach($array2 as $data){
                 ?>
-                        <td>
-                <?=date('ha',$data->getTime())?>
-                            <br/>
-                <?=$data->getTemperature()?>
-                            <br/>
+                        <td valgin="top">
+                <b><?=date('H:i',$data->getTime())?></b>
+                            <br/><br/>
+                <?=$data->getTemperature()?>&deg;
+                            <br/><br/>
                 <?=$data->getSummary()?>
                         </td>
                 <?
             }
             ?>
                 </tr>
-                </div>
+               
             <?
+            }
     }else{
         echo "null";
     }
