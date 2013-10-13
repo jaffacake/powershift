@@ -7,7 +7,9 @@ require_once('weatherController.php');
     $weatherController = new weatherController();
 
     if(isset($_POST['location'])&&isset($_POST['forecast'])){
+        
         $array = $locationController->getLocation($_POST['location']);
+        
         if($_POST['forecast']=="week"){
             
         $array2 = $weatherController->getWeeksForecast($array['lat'], $array['lng']);
@@ -43,30 +45,36 @@ require_once('weatherController.php');
 <?php
         }
         elseif ($_POST['forecast']=="day"){
-            if($_POST['forecastDay']=="day1"){
-                $array2 = $weatherController->getTodaysForecast($array['lat'], $array['lng']);
-            }
-            else{
                 preg_match('!\d+!', $_POST['forecastDay'], $match);
-                //$timestamp = date_timestamp_get(Date('l', strtotime("+".$match[0]." days")));
-                $timestam = "1381742393";
-                $array2 = $weatherController->getdayForecast($array['lat'], $array['lng'], $timestamp);
+                $timestamp = "";
+                if($match[0]!=1){
+                    $timestamp = Date('U', strtotime("+".$match[0]." days"));
+                }else{
+                    $timestamp = Date('U');
+                }
+                $array2 = $weatherController->getDayForecast($array['lat'], $array['lng'], $timestamp);
             }
             ?>
 
             <div>
+                <table valgin="top">
+                    <tr>
             <?php
-            //$i = 1;
             foreach($array2 as $data){
-                echo $data->getTime();
-            ?> 
-            
-            <?
+                ?>
+                        <td>
+                <?=date('ha',$data->getTime())?>
+                            <br/>
+                <?=$data->getTemperature()?>
+                            <br/>
+                <?=$data->getSummary()?>
+                        </td>
+                <?
             }
             ?>
+                </tr>
                 </div>
             <?
-        }
     }else{
         echo "null";
     }
