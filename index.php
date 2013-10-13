@@ -19,13 +19,31 @@
           $.ajax({
             type: "POST",
             url: "controller.php",
-            data: { location: $("#location").val()}
+            data: { forecast: "week", location: $("#location").val()}
           })
             .done(function( data ) {
             $("#LoadingImage").hide();
                 $("#content").html(data);
             });
           
+      });
+      
+      
+      $('[class^="forecast"]').click(function() {
+          if($("#location").val()==null){
+              location = <?=$_SERVER['REMOTE_ADDR']?>;
+          }else{
+              location = $("#location").val()
+          }
+          $.ajax({
+            type: "POST",
+            url: "controller.php",
+            data: { forecast: "day", forecastDay: $(this).children(".day").attr("id"), location: location}
+          })
+            .done(function( data ) {
+            $("#LoadingImage").hide();
+                $("#day-summary").html(data);
+            });
       });
     
     });
@@ -53,7 +71,7 @@
             ?>
             <td>
 
-                <div class="forecast">
+                <div class="forecast" id="forecast<?=$i?>">
                     <div class="day" id="day<?=$i?>"><h2><?=Date('l', strtotime("+".$i." days"))?></h2></div>
                     <div class="icon" id="icon<?=$i?>"><img src="images/weather/<?=$data->getIcon()?>.png" width="96px" height="96px"/></div>
                     <div class="maxTemp" id="maxTemp<?=$i?>">Max Temp: <?=$data->getMaxTemperature()?></div>
@@ -67,6 +85,9 @@
 
             }
             ?>
+        </tr>
+        <tr>
+            <td><div id="day-summary"></div></td>
         </tr>
     </table>
 </div>
