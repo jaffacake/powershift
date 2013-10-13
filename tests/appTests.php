@@ -1,7 +1,8 @@
 <?php
-require_once dirname(__FILE__) . '\..\location.php';
-require_once dirname(__FILE__) . '\..\weather.php';
-require_once dirname(__FILE__) . '\..\locationController.php';
+require_once dirname(__FILE__) . '/../location.php';
+require_once dirname(__FILE__) . '/../weather.php';
+require_once dirname(__FILE__) . '/../locationController.php';
+require_once dirname(__FILE__) . '/../weatherController.php';
  
 class WeatherTest extends PHPUnit_Framework_TestCase {
    
@@ -31,6 +32,11 @@ class WeatherTest extends PHPUnit_Framework_TestCase {
       echo "weather created";
     }
     
+    function testCanCreateAWeatherController() {
+      $weather = new WeatherController();
+      echo "weather created";
+    }
+    
     function testCanCreateALocationController() {
       $locationController = new LocationController();
       echo "LocationController created";
@@ -38,12 +44,10 @@ class WeatherTest extends PHPUnit_Framework_TestCase {
     
     function testCanRetrieveLocationLatLng(){
       $locationController = new LocationController();
-      $location = $locationController->getLocation("b92 0pu");
       
-      $location2 = new Location();
-      $location2->setLatLng('52.430286407471','-1.7572659254074');
+      $array = array('lat' => '52.430286407471', 'lng' => '-1.7572659254074');
       
-      $this->assertEquals($location->getLatLng(),$location2->getLatLng());
+      $this->assertEquals($array,$locationController->getLocation("b92 0pu"));
       
       echo "LocationController created";
     }
