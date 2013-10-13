@@ -1,14 +1,15 @@
 
 <link href="style.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery-1.10.2.min.js"></script>
-
+<script src="js/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script>
     $(document).ready(function(){
-      $("#search").submit(function( event ){
-          $("#LoadingImage").show();
+        
+        function ajax(){
+            $("#LoadingImage").show();
           $("#day-summary").html("");
-          event.preventDefault();
-          $.ajax({
+            $.ajax({
             type: "POST",
             url: "controller.php",
             data: { forecast: "week", location: $("#location").val()},
@@ -16,7 +17,13 @@
                 $("#LoadingImage").hide();
                 $("#content").html(data);
             }
-          });       
+          });
+        }
+    
+      $("#search").submit(function( event ){
+          
+          event.preventDefault();
+           ajax();      
       });
       
       
@@ -46,24 +53,58 @@
         $("#LoadingImage").show();
         $("#day-summary").html("");
         event.preventDefault();
-        $.ajax({
-          type: "POST",
-          url: "controller.php",
-          data: { forecast: "week", location: "<?=$_SERVER['REMOTE_ADDR']?>"},
-          success: function( data ) {
-              $("#LoadingImage").hide();
-              $("#content").html(data);
-          }
-        });
+            $.ajax({
+              type: "POST",
+              url: "controller.php",
+              data: { forecast: "week", location: "<?=$_SERVER['REMOTE_ADDR']?>"},
+              success: function( data ) {
+                  $("#LoadingImage").hide();
+                  $("#content").html(data);
+              }
+            });
 
-    });
+        });
+         $( "#location" ).autocomplete({
+            source: function( request, response ) {
+            $.ajax({
+                url: "http://ws.geonames.org/searchJSON",
+                dataType: "jsonp",
+                data: {
+                featureClass: "P",
+                style: "full",
+                maxRows: 12,
+                name_startsWith: request.term
+                },
+                success: function( data ) {
+                response( $.map( data.geonames, function( item ) {
+                    return {
+                        label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
+                        value: item.name
+                    }
+                }));
+                }
+            });
+            },
+            minLength: 2,
+            select: function( event, ui ) {
+                ajax(); 
+            },
+            open: function() {
+                $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+            },
+            close: function() {
+                $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+            }
+            });
     
     });
     
 </script>
 
 <form id="search" method="POST">
+    <div class="ui-widget">
     <input id="location" name="location"/>
+    </div>
     <input id="submit" type="submit"/>
     <input type="button" id="currentLocation" name="currentLocation" value="Use Current Location"/>
     <div id="LoadingImage" style="display: none">
