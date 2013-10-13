@@ -55,7 +55,7 @@ require_once('weatherController.php');
                 $array2 = $weatherController->getDayForecast($array['lat'], $array['lng'], $timestamp);
             
             ?>
-                <table valgin="top" style="color:#ffffff;">
+                <table valgin="top" class="day-summary">
                     <tr valgin="top">
             <?php
             foreach($array2 as $data){
