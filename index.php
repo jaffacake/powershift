@@ -21,9 +21,8 @@
         }
     
       $("#search").submit(function( event ){
-          
           event.preventDefault();
-           ajax();      
+          ajax();      
       });
       
       
