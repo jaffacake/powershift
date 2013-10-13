@@ -48,15 +48,17 @@ require_once('weatherController.php');
             }
             else{
                 preg_match('!\d+!', $_POST['forecastDay'], $match);
-                $timestamp = date_timestamp_get(Date('l', strtotime("+".$match[0]." days")));
+                //$timestamp = date_timestamp_get(Date('l', strtotime("+".$match[0]." days")));
+                $timestam = "1381742393";
                 $array2 = $weatherController->getdayForecast($array['lat'], $array['lng'], $timestamp);
             }
             ?>
 
-            <div><?php
-            $i = 1;
+            <div>
+            <?php
+            //$i = 1;
             foreach($array2 as $data){
-                echo $data->getMaxTemperature();
+                echo $data->getTime();
             ?> 
             
             <?
