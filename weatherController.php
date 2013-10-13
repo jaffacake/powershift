@@ -22,7 +22,11 @@ class WeatherController{
     }
     
     public function getWeeksForecast($lat,$lng){       
-        return $this->forecast->getForecastWeek($lat, $lng);;
+        return $this->forecast->getForecastWeek($lat, $lng);
+    }
+    
+    public function getDayForecast($lat,$lng,$timestamp){
+        return $this->forecast->getHistoricalConditions($lat, $lng, $timestamp);
     }
 }
 
