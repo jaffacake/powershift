@@ -79,13 +79,21 @@ class ForecastIO{
    */
   function getHistoricalConditions($latitude, $longitude, $timestamp) {
 
-    $exclusions = 'currently,minutely,hourly,alerts,flags';
+    $exclusions = 'currently,minutely';
 
     $data = $this->requestData($latitude, $longitude, $timestamp, $exclusions);
-
+    
+    
+    
     if ($data !== false) {
+        $conditions = array();
+        foreach ($data->hourly->data as $raw_data) {
 
-      return new ForecastIOConditions($data->daily->data[0]);
+            $conditions[] = new ForecastIOConditions($raw_data);
+      
+        }
+        
+        return $conditions;
 
     } else {
 
