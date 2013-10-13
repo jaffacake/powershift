@@ -90,9 +90,7 @@
             }
             ?>
         </tr>
-        <tr>
-            <td><div id="day-summary"></div></td>
-        </tr>
     </table>
 </div>
 
+<div id="day-summary"></div>
