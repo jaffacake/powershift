@@ -13,7 +13,7 @@
 
 <script>
     $(document).ready(function(){
-      $("#search").submit(function(event){
+      $("#search").submit(function( event ){
           $("#LoadingImage").show();
           event.preventDefault();
           $.ajax({
@@ -29,21 +29,25 @@
       });
       
       
-      $('[class^="forecast"]').click(function() {
-          if($("#location").val()==null){
-              location = <?=$_SERVER['REMOTE_ADDR']?>;
+      $('body').on("click", '[class^="forecast"]', function ( event ) {
+          event.preventDefault();
+          $("#LoadingImage").show();
+          loc = "";
+          if($("#location").val().length==0){
+              loc = "<?=$_SERVER['REMOTE_ADDR']?>";
           }else{
-              location = $("#location").val()
+              loc = $("#location").val();
           }
           $.ajax({
             type: "POST",
             url: "controller.php",
-            data: { forecast: "day", forecastDay: $(this).children(".day").attr("id"), location: location}
+            data: { forecast: "day", forecastDay: $(this).children(".day").attr("id"), location: loc}
           })
             .done(function( data ) {
-            $("#LoadingImage").hide();
+                $("#LoadingImage").hide();
                 $("#day-summary").html(data);
             });
+          return false;
       });
     
     });
@@ -51,11 +55,11 @@
 </script>
 
 <form id="search" method="POST">
-<input id="location" name="location"/>
-<input id="submit" type="submit"/>
-<div id="LoadingImage" style="display: none">
-<img src="images/ajax_loading.gif" />
-</div>
+    <input id="location" name="location"/>
+    <input id="submit" type="submit"/>
+    <div id="LoadingImage" style="display: none">
+        <img src="images/ajax_loading.gif" />
+    </div>
 </form>
 
 <div id="content">
